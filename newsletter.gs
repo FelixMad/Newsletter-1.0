@@ -119,3 +119,25 @@ function fecha_(date){
   var month = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
   return week[date.getDay()]+" "+date.getDate()+" de "+month[date.getMonth()]+" del "+date.getFullYear();
 }
+
+
+var scriptProperties = PropertiesService.getScriptProperties();
+
+function creaSpreadsheet(){
+
+  var idss = SpreadsheetApp.create("Newsletter").getId();
+  scriptProperties.setProperty('idss', idss);
+  
+  var idform = FormApp.create("Newsletter").getId();
+  scriptProperties.setProperty('idform', idform);
+  
+  var form = FormApp.openById(idform);
+  form.setDestination(FormApp.DestinationType.SPREADSHEET, idss);
+  
+  SpreadsheetApp.openById(idss).getSheets()[0].setName('mails');
+  
+  form.addTextItem().setTitle('mail');
+  form.addTextItem().setTitle('test');
+}
+
+
